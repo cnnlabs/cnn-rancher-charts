@@ -31,7 +31,7 @@ questions:
       - prod
     required: true
     label: "Environment"
-    show_subquestions_if: "prod"
+    show_subquestion_if: prod
     subquestions:
       - variable: logzio
         default: stderr
@@ -54,3 +54,9 @@ questions:
     required: true
     label: "App Image URL"
     description: "URL found through https://stash.cnn.io. Must be pushed via `turner+team_cnn` quay.io robot account."
+  - variable: containerPort
+    default: 8080
+    type: int
+    required: true
+    label: "Container Port"
+    description: "Port container is listening on."
