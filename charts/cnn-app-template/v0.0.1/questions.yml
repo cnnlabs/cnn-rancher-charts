@@ -5,7 +5,7 @@ questions:
     default: your-app-name-here
     type: string
     required: true
-    label: "Application Name"
+    label: "Name"
   - variable: project
     default: sandbox
     type: enum
