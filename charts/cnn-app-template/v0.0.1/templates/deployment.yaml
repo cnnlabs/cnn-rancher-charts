@@ -1,0 +1,63 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  namespace: {{ .Values.project }}-{{ .Values.env }}
+  labels:
+    app: {{ .Values.name }}
+    chart: {{ include "cnn-app-template.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    workload.user.cattle.io/workloadselector: deployment-{{ .Values.name }}
+    {{if eq .Values.env "prod" -}}
+    logzio: {{ .Values.logzio }}
+    {{- end }}
+  {{- if eq .Values.env "prod"}}
+  annotations:
+    production_monitoring: "{{ .Values.production_monitoring }}"
+    kb_article: {{ .Values.kb_article }}
+  {{- end }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+      release: {{ .Release.Name }}
+      workload.user.cattle.io/workloadselector: deployment-{{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+        release: {{ .Release.Name }}
+        workload.user.cattle.io/workloadselector: deployment-{{ .Values.name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.url }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.image.containerPort }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.image.healthcheckRoute }}
+              port: {{ .Values.image.containerPort }}
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.image.healthcheckRoute }}
+              port: {{ .Values.image.containerPort }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.name }}-nodeport
+  namespace: {{ .Values.project }}-{{ .Values.env }}
+  labels:
+    app: {{ .Values.name }}
+    chart: {{ include "cnn-app-template.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.image.containerPort }}
+      protocol: TCP
+      name: {{ .Values.image.containerPort }}tcp
+      targetPort: {{ .Values.image.containerPort }}
+  selector:
+    workload.user.cattle.io/workloadselector: deployment-{{ .Values.name  }}
