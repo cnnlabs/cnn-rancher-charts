@@ -7,11 +7,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  {{- if .Release.Name }}
   name: {{ $appName }}-{{ .Values.ingress.type }}
-  {{- else }}
-  name: {{ $appName }}
-  {{- end }}
   namespace: {{ .Release.Namespace }}
   annotations:
     {{- if eq .Values.ingress.type "internal" }}

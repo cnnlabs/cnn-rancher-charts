@@ -32,11 +32,9 @@ spec:
         appSelector: deployment-{{ $appSelector }}
         logzio: {{ .Values.logzio }}
         albIngressName: {{ $albIngressName }}
-      {{- if .Release.Name }}
       annotations:
         production_monitoring: {{ .Values.monitoring.enabled }}
         kb_article: {{ .Values.monitoring.kb_article }}
-      {{- end }}
     spec:
       containers:
         - name: {{ $appName }}
