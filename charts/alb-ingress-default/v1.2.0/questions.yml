@@ -5,7 +5,8 @@ questions:
     type: boolean
     required: true
     default: false
-    label: "Use existing deployment"
+    label: "Create new deployment"
+    description: "Use existing deployment. If `false`, the deployment must not exist in this namespace. Type the name of the deployment above in the `Name` field."
     #show_subquestion_if: true
     #subquestions:
     #  - variable: logzio
@@ -17,11 +18,11 @@ questions:
     #      - all
     #    label: "Logzio"
     #    description: "This is for shipping console logs at the container level. The default is to only ship stderr."
-  - variable: deployment.name
-    default: your-deployment-name-here
-    type: string
-    required: true
-    label: "Deployment Name"
+    #- variable: deployment.name
+    #- default: your-deployment-name-here
+    #- type: string
+    #- required: true
+    #- label: "Deployment Name"
   - variable: logzio
     default: stderr
     type: enum

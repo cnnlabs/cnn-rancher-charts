@@ -1,13 +1,13 @@
-{{- $albIngressName := .Values.deployment.name | default "default" -}}
+{{- $albIngressName := .Release.Name | default "default" -}}
 {{- $fallbackName := printf "%s-%s-shared" .Release.Namespace .Values.ingress.type -}}
 {{- $fallbackSelector := printf "%s-%s-backend" .Release.Namespace .Values.ingress.type -}}
-{{- $appName := .Values.deployment.name | default $fallbackName -}}
-{{- $appSelector := .Values.deployment.name | default $fallbackSelector -}}
+{{- $appName := .Release.Name | default $fallbackName -}}
+{{- $appSelector := .Release.Name | default $fallbackSelector -}}
 {{- $port := .Values.deployment.port | default 8080 -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  {{- if .Values.deployment.name }}
+  {{- if .Release.Name }}
   name: {{ $appName }}-{{ .Values.ingress.type }}
   {{- else }}
   name: {{ $appName }}
@@ -31,7 +31,7 @@ metadata:
     albIngressName: {{ $albIngressName }}
 spec:
   rules:
-    - host: {{ $appName }}.cnnio.net
+    - host: {{ $appName }}.{{ .Values.ingress.host }}
       http:
         paths:
           - path: {{ .Values.ingress.path }}
