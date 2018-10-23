@@ -1,0 +1,36 @@
+{{- $albIngressName := .Release.Name | default "default" -}}
+{{- $fallbackName := printf "%s-%s-shared" .Release.Namespace .Values.ingress.type -}}
+{{- $fallbackSelector := printf "%s-%s-backend" .Release.Namespace .Values.ingress.type -}}
+{{- $appName := .Release.Name | default $fallbackName -}}
+{{- $appSelector := .Release.Name | default $fallbackSelector -}}
+{{- $port := .Values.deployment.port | default 8080 -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $appName }}-{{ .Values.ingress.type }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    {{- if eq .Values.ingress.type "internal" }}
+    alb.ingress.kubernetes.io/scheme: internal
+    {{- else if eq .Values.ingress.type "external" }}
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    {{- end}}
+    alb.ingress.kubernetes.io/attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=alb-logs-news-prod-dx,access_logs.s3.prefix={{ $appName }}
+    alb.ingress.kubernetes.io/listen-ports: "[{\"HTTPS\": 443, \"HTTP\": 80}]"
+    alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certArn }}
+    alb.ingress.kubernetes.io/security-groups: news-prod-dx
+  labels:
+    app: {{ include "alb-ingress-default.name" . }}
+    chart: {{ include "alb-ingress-default.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    albIngressName: {{ $albIngressName }}
+spec:
+  rules:
+    - host: {{ $appName }}.{{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: {{ .Values.ingress.path }}
+            backend:
+              serviceName: {{ $appSelector }}-nodeport
+              servicePort: {{ $port }}

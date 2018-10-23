@@ -1,0 +1,31 @@
+# Default values for alb-ingress-default.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+deployment:
+  create: true
+
+image:
+  url: quay.io/turner/simple-backend:1.0
+  pullPolicy: IfNotPresent
+
+logzio: stderr
+
+monitoring:
+  enabled: "true"
+  kb_article: ""
+
+nameOverride: ""
+fullnameOverride: ""
+
+service:
+  type: NodePort
+  port: 8080
+
+ingress:
+  host: cnnio.net
+  name: ""
+  certArn: arn:aws:acm:us-east-1:175259281135:certificate/e6b263d1-7074-4830-86d1-dd2eec1aaaa6
+  path: /*
