@@ -33,7 +33,7 @@ spec:
         logzio: {{ .Values.logzio }}
         albIngressName: {{ $albIngressName }}
       annotations:
-        production_monitoring: {{ .Values.monitoring.enabled }}
+        production_monitoring: "{{ .Values.monitoring.enabled }}"
         kb_article: {{ .Values.monitoring.kb_article }}
     spec:
       containers:
