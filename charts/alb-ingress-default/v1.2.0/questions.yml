@@ -2,7 +2,7 @@ categories:
   - App
 questions:
   - variable: deployment.create
-    type: bool
+    type: boolean
     required: true
     default: false
     label: "Use existing deployment"
@@ -50,10 +50,11 @@ questions:
     label: "Container Port"
     description: "Port container is listening on."
   - variable: ingress.host
-    type: string
+    type: hostname
     required: true
     default: cnnio.net
     label: "Ingress Domain"
+    description: "If this is anything other than `cnnio.net`, you will need to handle DNS yourself."
   - variable: ingress.type
     default: internal
     type: enum
