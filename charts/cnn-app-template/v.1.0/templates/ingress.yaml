@@ -20,8 +20,8 @@ metadata:
     alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certArn }}
     alb.ingress.kubernetes.io/security-groups: news-prod-dx
   labels:
-    app: {{ include "alb-ingress-default.name" . }}
-    chart: {{ include "alb-ingress-default.chart" . }}
+    app: {{ include "cnn-app-template.name" . }}
+    chart: {{ include "cnn-app-template.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     albIngressName: {{ $albIngressName }}

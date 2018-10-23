@@ -11,8 +11,8 @@ metadata:
   name: {{ $appName }}
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ include "alb-ingress-default.name" . }}
-    chart: {{ include "alb-ingress-default.chart" . }}
+    app: {{ include "cnn-app-template.name" . }}
+    chart: {{ include "cnn-app-template.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     appSelector: deployment-{{ $appSelector }}
@@ -21,13 +21,13 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ include "alb-ingress-default.name" . }}
+      app: {{ include "cnn-app-template.name" . }}
       release: {{ .Release.Name }}
       appSelector: deployment-{{ $appSelector }}
   template:
     metadata:
       labels:
-        app: {{ include "alb-ingress-default.name" . }}
+        app: {{ include "cnn-app-template.name" . }}
         release: {{ .Release.Name }}
         appSelector: deployment-{{ $appSelector }}
         logzio: {{ .Values.logzio }}

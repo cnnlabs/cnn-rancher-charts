@@ -11,8 +11,8 @@ metadata:
   name: {{ $appName }}-nodeport
   namespace: {{ .Release.Namespace }}
   labels:
-    app: {{ include "alb-ingress-default.name" . }}
-    chart: {{ include "alb-ingress-default.chart" . }}
+    app: {{ include "cnn-app-template.name" . }}
+    chart: {{ include "cnn-app-template.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     albIngressName: {{ $albIngressName }}
