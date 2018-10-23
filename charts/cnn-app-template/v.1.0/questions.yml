@@ -6,14 +6,16 @@ questions:
     required: true
     default: false
     label: "Create new deployment"
-    description: "Use existing deployment. If `false`, the deployment must not exist in this namespace. Type the name of the deployment above in the `Name` field."
+    description: |
+        "Use existing deployment. If `false`, the deployment must not exist in this namespace.
+        Type the name of the deployment above in the `Name` field."
     show_subquestion_if: true
     subquestions:
       - variable: image.url
         default: ""
         type: string
         required: true
-        label: "App Image URL"
+        label: "Image URL"
         description: "URL found through https://stash.cnn.io. Must be pushed via `turner+team_cnn` quay.io robot account."
       - variable: deployment.port
         default: 8080
