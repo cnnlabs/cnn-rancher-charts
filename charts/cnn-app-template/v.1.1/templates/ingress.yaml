@@ -34,8 +34,12 @@ spec:
             backend:
               serviceName: {{ $appSelector }}-nodeport
               servicePort: {{ $port }}
-    {{- if ne .Values.ingress.host "cnnio.net" }}
+    {{- if ne .Values.ingress.domain "cnnio.net" }}
+    {{- if .Values.ingress.custom_subdomain }}
+    - host: {{ .Values.ingress.custom_subdomain }}.{{ .values.ingress.host }}
+    {{- else }}
     - host: {{ $appName }}.{{ .Values.ingress.host }}
+    {{- end }}
       http:
         paths:
           - path: {{ .Values.ingress.path }}

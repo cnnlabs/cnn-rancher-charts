@@ -41,12 +41,25 @@ questions:
         required: true
         label: "KB Article"
         description: "URL to docs or ERP so the DOC knows what to do when this deployment fails."
-  - variable: ingress.host
+  - variable: ingress.custom_subdomain
+    type: boolean
+    default: false
+    required: true
+    label: "Use Custom Subdomain"
+    description: "Enable if you'd like your subdomain to be different from your deployment name."
+    show_subquestion_if: true
+    subquestions:
+      - variable: ingress.subdomain
+        type: string
+        required: true
+        default: ""
+        label: "Desired Subdomain"
+  - variable: ingress.domain
     type: string
     required: true
     default: cnnio.net
-    label: "Ingress Domain"
-    description: "If this is anything other than `cnnio.net`, you will need to CNAME to the automatically created `cnnio.net` host manually."
+    label: "Desired Domain"
+    description: "If this is anything other than `cnnio.net`, you will need to manually CNAME to the automatically created `cnnio.net` host."
   - variable: ingress.type
     default: internal
     type: enum
