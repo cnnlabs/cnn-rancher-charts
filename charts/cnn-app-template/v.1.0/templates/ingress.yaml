@@ -27,6 +27,14 @@ metadata:
     albIngressName: {{ $albIngressName }}
 spec:
   rules:
+    - host: {{ $appName }}.cnnio.net
+      http:
+        paths:
+          - path: {{ .Values.ingress.path }}
+            backend:
+              serviceName: {{ $appSelector }}-nodeport
+              servicePort: {{ $port }}
+    {{- if ne .Values.ingress.host "cnnio.net" }}
     - host: {{ $appName }}.{{ .Values.ingress.host }}
       http:
         paths:
@@ -34,3 +42,4 @@ spec:
             backend:
               serviceName: {{ $appSelector }}-nodeport
               servicePort: {{ $port }}
+    {{- end }}

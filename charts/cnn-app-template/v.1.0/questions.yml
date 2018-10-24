@@ -6,9 +6,7 @@ questions:
     required: true
     default: false
     label: "Create new deployment"
-    description: |
-        "Use existing deployment. If `false`, the deployment must not exist in this namespace.
-        Type the name of the deployment above in the `Name` field."
+    description: "See above for detailed description."
     show_subquestion_if: true
     subquestions:
       - variable: image.url
@@ -48,7 +46,7 @@ questions:
     required: true
     default: cnnio.net
     label: "Ingress Domain"
-    description: "If this is anything other than `cnnio.net`, you will need to handle DNS yourself."
+    description: "If this is anything other than `cnnio.net`, you will need to CNAME to the automatically created `cnnio.net` host manually."
   - variable: ingress.type
     default: internal
     type: enum
