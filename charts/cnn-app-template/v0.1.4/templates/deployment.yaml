@@ -1,0 +1,60 @@
+{{- if .Values.deployment.create -}}
+{{- $albIngressName := .Release.Name | default "default" -}}
+{{- $fallbackName := printf "%s-%s-backend" .Release.Namespace .Values.ingress.type -}}
+{{- $fallbackSelector := printf "%s-%s-backend" .Release.Namespace .Values.ingress.type -}}
+{{- $appName := .Release.Name | default $fallbackName -}}
+{{- $appSelector := .Release.Name | default $fallbackSelector -}}
+{{- $port := .Values.deployment.port | default 8080 }}
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ $appName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "cnn-app-template.name" . }}
+    chart: {{ include "cnn-app-template.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    appSelector: deployment-{{ $appSelector }}
+    albIngressName: {{ $albIngressName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "cnn-app-template.name" . }}
+      release: {{ .Release.Name }}
+      appSelector: deployment-{{ $appSelector }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "cnn-app-template.name" . }}
+        release: {{ .Release.Name }}
+        appSelector: deployment-{{ $appSelector }}
+        logzio: {{ .Values.logzio }}
+        albIngressName: {{ $albIngressName }}
+      annotations:
+        production_monitoring: "{{ .Values.monitoring.enabled }}"
+        kb_article: {{ .Values.monitoring.kb_article }}
+    spec:
+      containers:
+        - name: {{ $appName }}
+          image: "{{ .Values.image.url }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: PORT
+            value: {{ $port | quote }}
+          ports:
+            - name: http
+              containerPort: {{ $port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.deployment.healthcheck }}
+              port: http
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.deployment.healthcheck }}
+              port: http
+      imagePullSecrets:
+      - name: quay
+{{- end }}
