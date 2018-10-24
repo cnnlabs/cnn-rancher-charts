@@ -49,11 +49,11 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: {{ .Values.deployment.healthcheck }}
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: {{ .Values.deployment.healthcheck }}
               port: http
       imagePullSecrets:
       - name: quay

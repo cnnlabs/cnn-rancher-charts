@@ -6,6 +6,7 @@ replicaCount: 1
 
 deployment:
   create: true
+  healthcheck: /
 
 image:
   url: quay.io/turner/simple-backend:1.0

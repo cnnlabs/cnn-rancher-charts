@@ -12,7 +12,7 @@ questions:
     show_subquestion_if: true
     subquestions:
       - variable: image.url
-        default: ""
+        default: quay.io/turner/simple-backend:1.0
         type: string
         required: true
         label: "Image URL"
@@ -23,6 +23,11 @@ questions:
         required: true
         label: "Container Port"
         description: "Port container is listening on."
+      - variable: deployment.healthcheck
+        default: /_healthcheck
+        type: string
+        required: true
+        label: "Healthcheck Route"
       - variable: logzio
         default: stderr
         type: enum
