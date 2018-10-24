@@ -36,7 +36,7 @@ spec:
               servicePort: {{ $port }}
     {{- if ne .Values.ingress.domain "cnnio.net" }}
     {{- if .Values.ingress.custom_subdomain }}
-    - host: {{ .Values.ingress.custom_subdomain }}.{{ .values.ingress.host }}
+    - host: {{ .Values.ingress.custom_subdomain }}.{{ .Values.ingress.host }}
     {{- else }}
     - host: {{ $appName }}.{{ .Values.ingress.host }}
     {{- end }}
