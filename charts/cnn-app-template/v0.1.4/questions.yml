@@ -9,7 +9,7 @@ questions:
     description: "See above for detailed description."
     show_subquestion_if: true
     subquestions:
-        - variable: image.url
+      - variable: image.url
         type: string
         default: quay.io/turner/simple-backend:1.0
         required: true
