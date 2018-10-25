@@ -66,3 +66,16 @@ questions:
     options:
       - internal
       - external
+  - variable: ingress.default_arn
+    type: boolean
+    default: true
+    required: true
+    label: "ALB Cert ARN"
+    description: "Use the default cert ARN with the domains `*.cnnio.net`, `*.api.cnnio.net`, `*.cnn.io`, `*.api.cnn.io`, `*.cnn.com`, `*.api.cnn.com`, `*.cnnlabs.io`, `*.api.cnnlabs.io`, `*.cnnlabs.com`, `*.api.cnnlabs.com`."
+    show_subquestions_if: false
+    subquestions:
+      - varibale: ingress.certArn
+        type: tring
+        required: true
+        default: "arn:aws:acm:us-east-1:175259281135:certificate/4455f959-06a7-4177-97b9-ec87c089e58b" 
+        label: "ARN of cert to use"
