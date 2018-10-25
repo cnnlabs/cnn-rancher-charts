@@ -73,7 +73,7 @@ questions:
     required: true
     label: "ALB Cert ARN"
     description: "Use the default cert ARN with the domains `*.cnnio.net`, `*.api.cnnio.net`, `*.cnn.io`, `*.api.cnn.io`, `*.cnn.com`, `*.api.cnn.com`, `*.cnnlabs.io`, `*.api.cnnlabs.io`, `*.cnnlabs.com`, `*.api.cnnlabs.com`."
-    show_subquestions_if: false
+    show_subquestion_if: false
     subquestions:
       - varibale: ingress.certArn
         type: string
