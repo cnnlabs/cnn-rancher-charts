@@ -9,7 +9,7 @@ questions:
     description: "See above for detailed description."
     show_subquestion_if: true
     subquestions:
-      - variable: image.url
+        - variable: image.url
         type: string
         default: quay.io/turner/simple-backend:1.0
         required: true
@@ -19,13 +19,13 @@ questions:
         type: int
         default: 8080
         required: true
-        label: "Container Port"
+        label: "Container port"
         description: "Port container is listening on."
       - variable: deployment.healthcheck
         type: string
         default: /_healthcheck
         required: true
-        label: "Healthcheck Route"
+        label: "Healthcheck route"
       - variable: logzio
         type: enum
         default: stderr
@@ -39,13 +39,13 @@ questions:
         type: string
         default: ""
         required: true
-        label: "KB Article or Contact Info"
+        label: "KB article or contact info"
         description: "URL to docs or ERP so the DOC knows what to do when this deployment fails."
   - variable: ingress.custom_subdomain
     type: boolean
     default: false
     required: true
-    label: "Use Custom Subdomain"
+    label: "Use custom subdomain"
     description: "Enable if you'd like your subdomain to be different from your deployment name."
     show_subquestion_if: true
     subquestions:
@@ -53,12 +53,12 @@ questions:
         type: string
         default: ""
         required: true
-        label: "Desired Subdomain"
+        label: "Desired subdomain"
   - variable: ingress.domain
     type: string
     default: cnnio.net
     required: true
-    label: "Desired Domain"
+    label: "Desired domain"
     description: "If this is anything other than `cnnio.net`, you will need to manually CNAME to the automatically created `cnnio.net` host."
   - variable: ingress.type
     type: enum
@@ -71,7 +71,7 @@ questions:
     type: boolean
     default: true
     required: true
-    label: "ALB Cert ARN"
+    label: "Use default ALB cert ARN"
     description: "Use the default cert ARN with the domains `*.cnnio.net`, `*.api.cnnio.net`, `*.cnn.io`, `*.api.cnn.io`, `*.cnn.com`, `*.api.cnn.com`, `*.cnnlabs.io`, `*.api.cnnlabs.io`, `*.cnnlabs.com`, `*.api.cnnlabs.com`."
     show_subquestion_if: false
     subquestions:
@@ -79,4 +79,4 @@ questions:
         type: string
         default: "arn:aws:acm:us-east-1:175259281135:certificate/4455f959-06a7-4177-97b9-ec87c089e58b" 
         required: true
-        label: "ARN of cert to use"
+        label: "Cert ARN"
