@@ -64,6 +64,7 @@ questions:
     type: enum
     default: internal
     required: true
+    label: "Ingress type"
     options:
       - internal
       - external
