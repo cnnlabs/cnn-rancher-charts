@@ -39,7 +39,7 @@ questions:
         type: string
         default: ""
         required: true
-        label: "KB Article"
+        label: "KB Article or Contact Info"
         description: "URL to docs or ERP so the DOC knows what to do when this deployment fails."
   - variable: ingress.custom_subdomain
     type: boolean
