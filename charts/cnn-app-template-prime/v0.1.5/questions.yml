@@ -62,12 +62,12 @@ questions:
     description: "If this is anything other than `cnnio.net`, you will need to manually CNAME to the automatically created `cnnio.net` host."
   - variable: ingress.type
     type: enum
-    default: internal
+    default: public
     required: true
     label: "Ingress type"
     options:
-      - internal
-      - external
+      - public
+      - private
   - variable: ingress.default_arn
     type: boolean
     default: true
