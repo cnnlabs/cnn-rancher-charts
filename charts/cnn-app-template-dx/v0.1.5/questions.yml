@@ -15,12 +15,6 @@ questions:
         required: true
         label: "Image URL"
         description: "URL found through https://stash.cnn.io. Must be pushed via `turner+team_cnn` quay.io robot account."
-      - variable: deployment.port
-        type: int
-        default: 8080
-        required: true
-        label: "Container port"
-        description: "Port container is listening on."
       - variable: deployment.healthcheck
         type: string
         default: /_healthcheck
@@ -41,6 +35,12 @@ questions:
         required: true
         label: "KB article or contact info"
         description: "URL to docs or ERP so the DOC knows what to do when this deployment fails."
+  - variable: deployment.port
+    type: int
+    default: 8080
+    required: true
+    label: "Container port"
+    description: "Port container is listening on."
   - variable: ingress.custom_subdomain
     type: boolean
     default: false
