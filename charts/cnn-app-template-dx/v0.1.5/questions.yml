@@ -38,6 +38,8 @@ questions:
   - variable: deployment.port
     type: int
     default: 8080
+    min: 1024
+    max: 65535
     required: true
     label: "Container port"
     description: "Port container is listening on."
