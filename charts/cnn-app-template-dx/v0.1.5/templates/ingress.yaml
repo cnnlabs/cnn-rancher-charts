@@ -4,6 +4,7 @@ metadata:
   name: {{ .Release.Name }}-{{ .Values.ingress.type }}
   namespace: {{ .Release.Namespace }}
   annotations:
+    kubernetes.io/ingress.class: alb
     {{- if eq .Values.ingress.type "internal" }}
     alb.ingress.kubernetes.io/scheme: internal
     {{- else if eq .Values.ingress.type "external" }}
