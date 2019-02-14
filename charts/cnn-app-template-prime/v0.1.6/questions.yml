@@ -1,0 +1,86 @@
+categories:
+  - App
+questions:
+  - variable: deployment.create
+    type: boolean
+    required: true
+    default: false
+    label: "Create new deployment"
+    description: "See above for detailed description."
+    show_subquestion_if: true
+    subquestions:
+      - variable: image.url
+        type: string
+        default: quay.io/turner/simple-backend:1.0
+        required: true
+        label: "Image URL"
+        description: "URL found through https://stash.cnn.io. Must be pushed via `turner+team_cnn` quay.io robot account."
+      - variable: deployment.healthcheck
+        type: string
+        default: /_healthcheck
+        required: true
+        label: "Healthcheck route"
+      - variable: logzio
+        type: enum
+        default: stderr
+        options:
+          - stdout
+          - stderr
+          - all
+        label: "Logzio"
+        description: "This is for shipping console logs at the container level. The default is to only ship stderr."
+      - variable: monitoring.kb_article
+        type: string
+        default: ""
+        required: true
+        label: "KB article or contact info"
+        description: "URL to docs or ERP so the DOC knows what to do when this deployment fails."
+  - variable: deployment.port
+    type: int
+    default: 8080
+    min: 1024
+    max: 65535
+    required: true
+    label: "Container port"
+    description: "Port container is listening on."
+  - variable: ingress.custom_subdomain
+    type: boolean
+    default: false
+    required: true
+    label: "Use custom subdomain"
+    description: "Enable if you'd like your subdomain to be different from your deployment name."
+    show_subquestion_if: true
+    subquestions:
+      - variable: ingress.subdomain
+        type: string
+        default: ""
+        required: true
+        label: "Desired subdomain"
+  - variable: ingress.domain
+    type: string
+    default: cnnio.net
+    required: true
+    label: "Desired domain"
+    description: "If this is anything other than `cnnio.net`, you will need to manually CNAME to the automatically created `cnnio.net` host."
+  - variable: ingress.type
+    type: enum
+    default: public
+    required: true
+    label: "Ingress type"
+    options:
+      - public
+      - private
+      - origin
+  - variable: ingress.default_arn
+    type: boolean
+    default: true
+    required: true
+    label: "Use default ALB cert ARN"
+    description: "Use the default cert ARN with the domains `*.cnnio.net`, `*.api.cnnio.net`, `*.cnn.io`, `*.api.cnn.io`, `*.cnn.com`, `*.api.cnn.com`, `*.cnnlabs.io`, `*.api.cnnlabs.io`, `*.cnnlabs.com`, `*.api.cnnlabs.com`."
+    show_subquestion_if: false
+    subquestions:
+      - varibale: ingress.certArn
+        type: string
+        default: "arn:aws:acm:us-east-1:175259281135:certificate/4455f959-06a7-4177-97b9-ec87c089e58b" 
+        required: true
+        label: "Cert ARN"
