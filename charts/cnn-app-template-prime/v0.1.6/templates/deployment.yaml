@@ -1,0 +1,54 @@
+{{- if .Values.deployment.create -}}
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ include "cnn-app-template.name" . }}
+    chart: {{ include "cnn-app-template.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    appSelector: deployment-{{ .Release.Name }}
+    albIngressName: {{ .Release.Name }}-{{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "cnn-app-template.name" . }}
+      release: {{ .Release.Name }}
+      appSelector: deployment-{{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "cnn-app-template.name" . }}
+        release: {{ .Release.Name }}
+        appSelector: deployment-{{ .Release.Name }}
+        logzio: {{ .Values.logzio }}
+        albIngressName: {{ .Release.Name }}-{{ .Release.Namespace }}
+      annotations:
+        production_monitoring: "{{ .Values.monitoring.enabled }}"
+        kb_article: {{ .Values.monitoring.kb_article }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.image.url }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: PORT
+            value: "{{ .Values.deployment.port }}"
+          ports:
+            - name: http
+              containerPort: {{ .Values.deployment.port }}
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.deployment.healthcheck }}
+              port: http
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.deployment.healthcheck }}
+              port: http
+      imagePullSecrets:
+      - name: quay
+{{- end }}
