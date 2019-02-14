@@ -70,6 +70,7 @@ questions:
     options:
       - public
       - private
+      - origin
   - variable: ingress.default_arn
     type: boolean
     default: true

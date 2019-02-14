@@ -10,6 +10,8 @@ metadata:
     alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-public
     {{- else if eq .Values.ingress.type "private" }}
     alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-private
+    {{- else if eq .Values.ingress.type "origin" }}
+    alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-private,cnn-eks-prime-origin
     {{- end}}
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=alb-logs-cnn-eks-prime,access_logs.s3.prefix={{ .Release.Name }}
