@@ -10,7 +10,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
     appSelector: deployment-{{ .Release.Name }}
-    albIngressName: {{ .Release.Name }}-{{ .Release.Namespace }}
+    albIngressName: {{ .Release.Name }}
 spec:
   replicas: 1
   selector:
@@ -25,7 +25,7 @@ spec:
         release: {{ .Release.Name }}
         appSelector: deployment-{{ .Release.Name }}
         logzio: {{ .Values.logzio }}
-        albIngressName: {{ .Release.Name }}-{{ .Release.Namespace }}
+        albIngressName: {{ .Release.Name }}
       annotations:
         production_monitoring: "{{ .Values.monitoring.enabled }}"
         kb_article: {{ .Values.monitoring.kb_article }}
