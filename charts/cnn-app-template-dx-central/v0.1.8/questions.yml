@@ -80,6 +80,6 @@ questions:
     subquestions:
       - varibale: ingress.certArn
         type: string
-        default: "arn:aws:acm:us-east-1:175259281135:certificate/4455f959-06a7-4177-97b9-ec87c089e58b" 
+        default: "arn:aws:acm:us-east-2:175259281135:certificate/b103d442-01f7-4aee-9d9b-dbe825977714"
         required: true
         label: "Cert ARN"

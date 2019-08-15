@@ -7,14 +7,14 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/target-type: ip
     {{- if eq .Values.ingress.type "public" }}
-    alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-public
+    alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-central-access-public
     {{- else if eq .Values.ingress.type "private" }}
-    alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-private
+    alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-central-access-private
     {{- else if eq .Values.ingress.type "origin" }}
-    alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-private,cnn-eks-prime-origin
+  alb.ingress.kubernetes.io/security-groups: cnn-eks-prime-central-access-public,cnn-eks-prime-central-access-origin
     {{- end}}
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=alb-logs-cnn-eks-prime,access_logs.s3.prefix={{ .Release.Name }}
+    alb.ingress.kubernetes.io/attributes: access_logs.s3.enabled=true,access_logs.s3.bucket=alb-logs-cnn-eks-prime-central-1,access_logs.s3.prefix={{ .Release.Name }}
     alb.ingress.kubernetes.io/listen-ports: "[{\"HTTPS\": 443, \"HTTP\": 80}]"
     alb.ingress.kubernetes.io/certificate-arn: {{ .Values.ingress.certArn }}
   labels:
